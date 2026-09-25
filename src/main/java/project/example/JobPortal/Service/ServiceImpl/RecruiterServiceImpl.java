@@ -8,12 +8,11 @@ import org.springframework.stereotype.Service;
 import project.example.JobPortal.Dto.RecruiterDto;
 import project.example.JobPortal.Entity.Company;
 import project.example.JobPortal.Entity.Recruiter;
+import project.example.JobPortal.Helper.ResourceNotFound;
 import project.example.JobPortal.Repository.CompanyRepository;
 import project.example.JobPortal.Repository.RecruiterRepository;
 import project.example.JobPortal.Service.RecruiterService;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class RecruiterServiceImpl implements RecruiterService {
@@ -31,7 +30,7 @@ public class RecruiterServiceImpl implements RecruiterService {
     public RecruiterDto create(RecruiterDto recruiterDto, Long companyId) {
 
         Company company = companyRepository.findById(companyId)
-                .orElseThrow(() -> new RuntimeException("Company not found"));
+                .orElseThrow(() -> new ResourceNotFound("Company not found"));
 
         Recruiter recruiter = new Recruiter();
 
@@ -57,7 +56,7 @@ public class RecruiterServiceImpl implements RecruiterService {
     public RecruiterDto getRecruiterById(Long recruiterId) {
 
         Recruiter recruiter = recruiterRepository.findById(recruiterId)
-                .orElseThrow(() -> new RuntimeException("Recruiter not found"));
+                .orElseThrow(() -> new ResourceNotFound("Recruiter not found"));
 
         return convertToDto(recruiter);
     }
@@ -66,7 +65,7 @@ public class RecruiterServiceImpl implements RecruiterService {
     public void deleteRecruiter(Long recruiterId) {
 
         Recruiter recruiter = recruiterRepository.findById(recruiterId)
-                .orElseThrow(() -> new RuntimeException("Recruiter not found"));
+                .orElseThrow(() -> new ResourceNotFound("Recruiter not found"));
 
         recruiterRepository.delete(recruiter);
     }
@@ -76,7 +75,7 @@ public class RecruiterServiceImpl implements RecruiterService {
                                         RecruiterDto recruiterDto) {
 
         Recruiter recruiter = recruiterRepository.findById(recruiterId)
-                .orElseThrow(() -> new RuntimeException("Recruiter not found"));
+                .orElseThrow(() -> new ResourceNotFound("Recruiter not found"));
 
         recruiter.setRecruiterName(recruiterDto.getRecruiterName());
         recruiter.setEmail(recruiterDto.getEmail());

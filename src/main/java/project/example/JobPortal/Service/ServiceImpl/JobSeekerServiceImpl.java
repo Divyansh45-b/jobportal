@@ -7,11 +7,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import project.example.JobPortal.Dto.JobSeekerDto;
 import project.example.JobPortal.Entity.JobSeeker;
+import project.example.JobPortal.Helper.ResourceNotFound;
 import project.example.JobPortal.Repository.JobSeekerRepository;
 import project.example.JobPortal.Service.JobSeekerService;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class JobSeekerServiceImpl implements JobSeekerService {
@@ -53,7 +52,7 @@ public class JobSeekerServiceImpl implements JobSeekerService {
     public void deleteJobSeeker(Long jobSeekerId) {
 
         JobSeeker jobSeeker = jobSeekerRepository.findById(jobSeekerId)
-                .orElseThrow(() -> new RuntimeException("Job Seeker not found"));
+                .orElseThrow(() -> new ResourceNotFound("this jobSeekerId is not present here"));
 
         jobSeekerRepository.delete(jobSeeker);
     }
@@ -63,7 +62,7 @@ public class JobSeekerServiceImpl implements JobSeekerService {
                                         JobSeekerDto jobSeekerDto) {
 
         JobSeeker jobSeeker = jobSeekerRepository.findById(jobSeekerId)
-                .orElseThrow(() -> new RuntimeException("Job Seeker not found"));
+                .orElseThrow(() -> new ResourceNotFound("I can not update , because no jobSeeker id here "));
 
         jobSeeker.setName(jobSeekerDto.getName());
         jobSeeker.setEmail(jobSeekerDto.getEmail());

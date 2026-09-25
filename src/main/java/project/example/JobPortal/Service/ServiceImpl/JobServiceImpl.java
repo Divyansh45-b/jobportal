@@ -10,6 +10,7 @@ import project.example.JobPortal.Dto.JobDto;
 import project.example.JobPortal.Entity.Company;
 import project.example.JobPortal.Entity.Job;
 import project.example.JobPortal.Entity.Recruiter;
+import project.example.JobPortal.Helper.ResourceNotFound;
 import project.example.JobPortal.Repository.CompanyRepository;
 import project.example.JobPortal.Repository.JobRepository;
 import project.example.JobPortal.Repository.RecruiterRepository;
@@ -35,10 +36,10 @@ public class JobServiceImpl implements JobService {
     public JobDto createJob(JobDto jobDto, Long companyId, Long recruiterId) {
 
         Company company = companyRepository.findById(companyId)
-                .orElseThrow(() -> new RuntimeException("Company not found"));
+                .orElseThrow(() -> new ResourceNotFound("Company not found"));
 
         Recruiter recruiter = recruiterRepository.findById(recruiterId)
-                .orElseThrow(() -> new RuntimeException("Recruiter not found"));
+                .orElseThrow(() -> new ResourceNotFound("Recruiter not found"));
 
         Job job = new Job();
 
@@ -73,7 +74,7 @@ public class JobServiceImpl implements JobService {
     public JobDto getJobById(Long jobId) {
 
         Job job = jobRepository.findById(jobId)
-                .orElseThrow(() -> new RuntimeException("Job not found"));
+                .orElseThrow(() -> new ResourceNotFound("Job not found"));
 
         return convertToDto(job);
     }
@@ -82,7 +83,7 @@ public class JobServiceImpl implements JobService {
     public JobDto updateJob(Long jobId, JobDto jobDto) {
 
         Job job = jobRepository.findById(jobId)
-                .orElseThrow(() -> new RuntimeException("Job not found"));
+                .orElseThrow(() -> new ResourceNotFound("Job not found"));
 
         job.setJobTitle(jobDto.getJobTitle());
         job.setLocation(jobDto.getLocation());
@@ -102,7 +103,7 @@ public class JobServiceImpl implements JobService {
     public void deleteJob(Long jobId) {
 
         Job job = jobRepository.findById(jobId)
-                .orElseThrow(() -> new RuntimeException("Job not found"));
+                .orElseThrow(() -> new ResourceNotFound("Job not found"));
 
         jobRepository.delete(job);
     }

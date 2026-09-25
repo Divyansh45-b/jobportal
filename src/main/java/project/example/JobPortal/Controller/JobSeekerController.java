@@ -1,5 +1,6 @@
 package project.example.JobPortal.Controller;
 
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
         import project.example.JobPortal.Dto.JobSeekerDto;
@@ -18,7 +19,7 @@ public class JobSeekerController {
     }
 
     @PostMapping("/create")
-    public JobSeekerDto createJobSeeker(@RequestBody JobSeekerDto jobSeekerDto) {
+    public JobSeekerDto createJobSeeker(@Valid @RequestBody JobSeekerDto jobSeekerDto) {
 
         return jobSeekerService.createJobSeeker(jobSeekerDto);
     }
@@ -34,7 +35,7 @@ public class JobSeekerController {
     @PutMapping("/updateJobSeeker/{jobSeekerId}")
     public JobSeekerDto updateJobSeeker(
             @PathVariable Long jobSeekerId,
-            @RequestBody JobSeekerDto jobSeekerDto) {
+           @Valid @RequestBody JobSeekerDto jobSeekerDto) {
 
         return jobSeekerService.updateJobSeeker(
                 jobSeekerId, jobSeekerDto);

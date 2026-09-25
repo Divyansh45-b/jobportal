@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import project.example.JobPortal.Dto.CompanyDto;
 import project.example.JobPortal.Entity.Company;
+import project.example.JobPortal.Helper.ResourceNotFound;
 import project.example.JobPortal.Repository.CompanyRepository;
 import project.example.JobPortal.Service.CompanyService;
 
@@ -50,7 +51,7 @@ public class CompanyServiceImpl implements CompanyService {
     public CompanyDto getCompanyById(Long companyId) {
 
         Company company = companyRepository.findById(companyId)
-                .orElseThrow(() -> new RuntimeException("Company not found"));
+                .orElseThrow(() -> new ResourceNotFound("I haven't found company id "));
 
         return convertToDto(company);
     }
@@ -61,7 +62,7 @@ public class CompanyServiceImpl implements CompanyService {
     public CompanyDto updateCompany(Long companyId, CompanyDto companyDto) {
 
         Company company = companyRepository.findById(companyId)
-                .orElseThrow(() -> new RuntimeException("Company not found"));
+                .orElseThrow(() -> new ResourceNotFound("Didn't found company Id so that it can be updated."));
 
         company.setCompanyName(companyDto.getCompanyName());
         company.setWebsite(companyDto.getWebsite());
@@ -77,7 +78,7 @@ public class CompanyServiceImpl implements CompanyService {
     public void deleteCompanyById(Long companyId) {
 
         Company company = companyRepository.findById(companyId)
-                .orElseThrow(() -> new RuntimeException("Company not found"));
+                .orElseThrow(() -> new ResourceNotFound("what to delete.. there is not id found !!"));
 
         companyRepository.delete(company);
     }

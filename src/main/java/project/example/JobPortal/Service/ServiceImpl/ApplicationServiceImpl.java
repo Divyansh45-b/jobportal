@@ -9,6 +9,7 @@ import project.example.JobPortal.Dto.ApplicationDto;
 import project.example.JobPortal.Entity.Application;
 import project.example.JobPortal.Entity.Job;
 import project.example.JobPortal.Entity.JobSeeker;
+import project.example.JobPortal.Helper.ResourceNotFound;
 import project.example.JobPortal.Repository.ApplicationRepository;
 import project.example.JobPortal.Repository.JobRepository;
 import project.example.JobPortal.Repository.JobSeekerRepository;
@@ -34,10 +35,10 @@ public class ApplicationServiceImpl implements ApplicationService {
     public ApplicationDto createApplication(ApplicationDto applicationDto, Long jobId, Long jobSeekerId) {
 
         Job job = jobRepository.findById(jobId)
-                .orElseThrow(() -> new RuntimeException("Job not found"));
+                .orElseThrow(() -> new ResourceNotFound("Job not found"));
 
         JobSeeker jobSeeker = jobSeekerRepository.findById(jobSeekerId)
-                .orElseThrow(() -> new RuntimeException("Job Seeker not found"));
+                .orElseThrow(() -> new ResourceNotFound("Job Seeker not found"));
 
         Application application = new Application();
 
@@ -65,7 +66,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     public ApplicationDto getApplicationById(Long applicationId) {
 
         Application application = applicationRepository.findById(applicationId)
-                .orElseThrow(() -> new RuntimeException("Application not found"));
+                .orElseThrow(() -> new ResourceNotFound("Application not found"));
 
         return convertToDto(application);
     }
@@ -75,7 +76,7 @@ public class ApplicationServiceImpl implements ApplicationService {
                                             ApplicationDto applicationDto) {
 
         Application application = applicationRepository.findById(applicationId)
-                .orElseThrow(() -> new RuntimeException("Application not found"));
+                .orElseThrow(() -> new ResourceNotFound("Application not found"));
 
         application.setAppliedDate(applicationDto.getAppliedDate());
         application.setStatus(applicationDto.getStatus());
@@ -89,7 +90,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     public void deleteApplication(Long applicationId) {
 
         Application application = applicationRepository.findById(applicationId)
-                .orElseThrow(() -> new RuntimeException("Application not found"));
+                .orElseThrow(() -> new ResourceNotFound("Application not found"));
 
         applicationRepository.delete(application);
     }

@@ -1,12 +1,13 @@
 package project.example.JobPortal.Controller;
 
 
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import project.example.JobPortal.Dto.CompanyDto;
 import project.example.JobPortal.Service.CompanyService;
 
-import java.util.List;
+
 
 @RestController
 @RequestMapping("/companies/api/")
@@ -20,7 +21,7 @@ public class CompanyController {
     }
 
     @PostMapping("/create")
-    public CompanyDto createCompany(@RequestBody CompanyDto companyDto)
+    public CompanyDto createCompany(@Valid @RequestBody CompanyDto companyDto)
     {
         return this.companyService.createCompany(companyDto);
     }
@@ -41,7 +42,7 @@ public class CompanyController {
 
     @PutMapping("/update/{companyId}")
     public CompanyDto updateCompany(@PathVariable Long companyId,
-                                    @RequestBody CompanyDto companyDto)
+                                    @Valid @RequestBody CompanyDto companyDto)
     {
         return this.companyService.updateCompany(companyId , companyDto);
     }

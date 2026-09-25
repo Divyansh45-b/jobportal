@@ -20,11 +20,9 @@ public class Recruiter {
 
     @ManyToOne
     @JoinColumn(name = "companyId")
-
     private Company company;
 
     @OneToMany(mappedBy = "recruiter", cascade = CascadeType.ALL)
-
     private List<Job> jobs;
 
 }
